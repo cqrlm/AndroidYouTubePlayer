@@ -23,11 +23,8 @@ class FirstPlaylistFragment : Fragment() {
 
         val recyclerView = view.recycler_view
 //        recyclerView.setHasFixedSize(true)
-        val linearLayoutManager = LinearLayoutManager(activity)
-        linearLayoutManager.orientation = LinearLayoutManager.VERTICAL
-        recyclerView.layoutManager = linearLayoutManager
+        recyclerView.layoutManager = LinearLayoutManager(activity)
         recyclerView.adapter = RecyclerAdapter(activity as AppCompatActivity)
-
 
         return view
     }
