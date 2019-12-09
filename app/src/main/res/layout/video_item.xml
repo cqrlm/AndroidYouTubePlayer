@@ -35,6 +35,11 @@
                 android:scaleType="center"
                 android:src="@mipmap/ic_youtube_play_button" />
 
+            <FrameLayout
+                android:id="@+id/youtube_holder"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
         </RelativeLayout>
     </androidx.cardview.widget.CardView>
 
