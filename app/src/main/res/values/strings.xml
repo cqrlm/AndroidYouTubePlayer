@@ -7,5 +7,6 @@
     <string name="info_title">Info</string>
     <string name="home_text">This is home fragment</string>
     <string name="info_text">This is info fragment</string>
+    <string name="youtube_player_play_button">YouTube player play button</string>
 
 </resources>
