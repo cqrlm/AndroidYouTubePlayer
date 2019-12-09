@@ -6,21 +6,6 @@
     <string name="playlist_3_title">Playlist 3</string>
     <string name="info_title">Info</string>
     <string name="home_text">This is home fragment</string>
-    <string name="playlist_1_text">This is playlist 1 fragment</string>
-    <string name="playlist_2_text">This is playlist 2 fragment</string>
-    <string name="playlist_3_text">This is playlist 3 fragment</string>
     <string name="info_text">This is info fragment</string>
 
-    <string-array name="video_id_array">
-        <item>CqhpNxI8qYw</item>
-        <item>sasCrpgHDy8</item>
-        <item>iJeh3x09Ya8</item>
-        <item>B5zRaD7B504</item>
-        <item>9qWHzj8k-Uo</item>
-        <item>RjiK45wC924</item>
-        <item>RH3zaLO8H4E</item>
-        <item>o14pyzosjvk</item>
-        <item>5SQrpBQne7A</item>
-        <item>5WJ3r67ORxo</item>
-    </string-array>
 </resources>
