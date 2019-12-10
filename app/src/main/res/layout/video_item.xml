@@ -7,7 +7,6 @@
     android:clickable="true"
     android:focusable="true"
     card_view:cardBackgroundColor="@android:color/black"
-    card_view:cardCornerRadius="6dp"
     card_view:cardElevation="6dp">
 
     <com.google.android.youtube.player.YouTubeThumbnailView
@@ -24,7 +23,7 @@
         android:visibility="visible">
 
         <ImageView
-            android:id="@+id/btnYoutube_player"
+            android:id="@+id/btn_youtube_player"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:contentDescription="@string/youtube_player_play_button"
@@ -38,5 +37,3 @@
 
     </RelativeLayout>
 </androidx.cardview.widget.CardView>
-
-    <!--</LinearLayout>-->
