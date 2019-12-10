@@ -1,7 +1,6 @@
 package com.example.lab6_youtubeapp.recyclerview
 
 import android.content.Context
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,13 +15,21 @@ import com.example.lab6_youtubeapp.DeveloperKey
 import com.example.lab6_youtubeapp.R
 import com.google.android.youtube.player.*
 
-
 class RecyclerAdapter(ctx: Context, val videos: List<VideoItem>) :
     RecyclerView.Adapter<RecyclerAdapter.VideoInfoHolder>() {
-    var youTubePlayer: YouTubePlayer? = null
-    var youTubePlayerFragment: YouTubePlayerSupportFragment? = null
+    inner class VideoInfoHolder(itemView: View) : ViewHolder(itemView) {
+        val containerYouTubePlayer: FrameLayout =
+            itemView.findViewById(R.id.youtube_holder) as FrameLayout
+        val relativeLayoutOverYouTubeThumbnailView: RelativeLayout =
+            itemView.findViewById<View>(R.id.relativeLayout_over_youtube_thumbnail) as RelativeLayout
+        val youTubeThumbnailView: YouTubeThumbnailView =
+            itemView.findViewById<View>(R.id.youtube_thumbnail) as YouTubeThumbnailView
+        val playButton: ImageView = itemView.findViewById<View>(R.id.btnYoutube_player) as ImageView
+    }
+
+    lateinit var youTubePlayer: YouTubePlayer
+    private lateinit var youTubePlayerFragment: YouTubePlayerSupportFragment
     private val fragmentManager = (ctx as AppCompatActivity).supportFragmentManager
-//    private val youTubePlayerFragment: YouTubePlayerSupportFragment = YouTubePlayerSupportFragment.newInstance()
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -73,91 +80,67 @@ class RecyclerAdapter(ctx: Context, val videos: List<VideoItem>) :
                 }
             })
         holder.playButton.setOnClickListener {
-            //            if (holder.containerYouTubePlayer.size == 0) {
-//                youTubePlayerFragment = YouTubePlayerSupportFragment.newInstance()
-//            }
-            try {
-                holder.containerYouTubePlayer.id = position + 1
+            holder.containerYouTubePlayer.id = position + 1
 
-                if (youTubePlayerFragment == null) {
-                    youTubePlayerFragment =
-                        YouTubePlayerSupportFragment.newInstance()
-                }
-                if ((youTubePlayerFragment as Fragment).isAdded) {
-                    if (youTubePlayer != null) {
-                        youTubePlayer?.pause()
-                        youTubePlayer?.release()
-                        youTubePlayer = null
-                    }
-                    fragmentManager
-                        .beginTransaction()
-                        .remove(youTubePlayerFragment as Fragment)
-                        .commit()
-                    fragmentManager
-                        .executePendingTransactions()
-                    youTubePlayerFragment = null
-                }
-                if (youTubePlayerFragment == null) {
-                    youTubePlayerFragment =
-                        YouTubePlayerSupportFragment.newInstance()
-                }
+            if (!this::youTubePlayerFragment.isInitialized) {
+                youTubePlayerFragment =
+                    YouTubePlayerSupportFragment.newInstance()
+            }
+            if ((youTubePlayerFragment as Fragment).isAdded) {
+//                if (youTubePlayer != null) {
+                youTubePlayer.pause()
+                youTubePlayer.release()
+//                    youTubePlayer = null
+//                }
                 fragmentManager
                     .beginTransaction()
-                    .add(
-                        holder.containerYouTubePlayer.id,
-                        youTubePlayerFragment as Fragment
-                    )
-                    .setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out)
+                    .remove(youTubePlayerFragment as Fragment)
                     .commit()
-
-//                (ctx as AppCompatActivity).supportFragmentManager.beginTransaction().replace(
-//                    holder.containerYouTubePlayer.id,
-//                    youTubePlayerFragment as Fragment
-//                ).addToBackStack(null).commit()
-
-                youTubePlayerFragment!!.initialize(
-                    DeveloperKey.DEVELOPER_KEY,
-                    object : YouTubePlayer.OnInitializedListener {
-                        override fun onInitializationSuccess(
-                            arg0: YouTubePlayer.Provider?,
-                            player: YouTubePlayer,
-                            wasRestored: Boolean
-                        ) {
-                            if (!wasRestored) {
-                                youTubePlayer = player
-                                youTubePlayer!!.cueVideo(videos[position].id)
-//                            player.cuePlaylist("PLWz5rJ2EKKc8jQfNAUu5reIGFNNqpn26X")
-                                // player.setFullscreen(true)
-                                // player.loadVideo("2zNSgSzhBfM")
-                                // player.play()
-                            }
-                        }
-
-                        override fun onInitializationFailure(
-                            arg0: YouTubePlayer.Provider?,
-                            arg1: YouTubeInitializationResult?
-                        ) {
-                            // TODO
-                        }
-                    })
-            } catch (e: Exception) {
-                Log.d("error", e.message)
+                fragmentManager
+                    .executePendingTransactions()
+                youTubePlayerFragment.onDestroy()
             }
+            if (!this::youTubePlayerFragment.isInitialized) {
+                youTubePlayerFragment =
+                    YouTubePlayerSupportFragment.newInstance()
+            }
+            fragmentManager
+                .beginTransaction()
+                .add(
+                    holder.containerYouTubePlayer.id,
+                    youTubePlayerFragment as Fragment
+                )
+                .commit()
+
+            youTubePlayerFragment.initialize(
+                DeveloperKey.DEVELOPER_KEY,
+                object : YouTubePlayer.OnInitializedListener {
+                    override fun onInitializationSuccess(
+                        arg0: YouTubePlayer.Provider?,
+                        player: YouTubePlayer,
+                        wasRestored: Boolean
+                    ) {
+                        if (!wasRestored) {
+                            youTubePlayer = player
+                            youTubePlayer.cueVideo(videos[position].id)
+//                            player.cuePlaylist("PLWz5rJ2EKKc8jQfNAUu5reIGFNNqpn26X")
+                            // player.setFullscreen(true)
+                            // player.loadVideo("2zNSgSzhBfM")
+                            // player.play()
+                        }
+                    }
+
+                    override fun onInitializationFailure(
+                        arg0: YouTubePlayer.Provider?,
+                        arg1: YouTubeInitializationResult?
+                    ) {
+                        // TODO
+                    }
+                })
         }
     }
 
     override fun getItemCount(): Int {
         return videos.size
     }
-
-    class VideoInfoHolder(itemView: View) : ViewHolder(itemView) {
-        var containerYouTubePlayer: FrameLayout =
-            itemView.findViewById(R.id.youtube_holder) as FrameLayout
-        var relativeLayoutOverYouTubeThumbnailView: RelativeLayout =
-            itemView.findViewById<View>(R.id.relativeLayout_over_youtube_thumbnail) as RelativeLayout
-        var youTubeThumbnailView: YouTubeThumbnailView =
-            itemView.findViewById<View>(R.id.youtube_thumbnail) as YouTubeThumbnailView
-        var playButton: ImageView = itemView.findViewById<View>(R.id.btnYoutube_player) as ImageView
-    }
-
 }
