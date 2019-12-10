@@ -1,24 +1,28 @@
 package com.example.lab6_youtubeapp.recyclerview
 
-import android.app.Activity
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.RelativeLayout
+import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.example.lab6_youtubeapp.DeveloperKey
 import com.example.lab6_youtubeapp.R
 import com.google.android.youtube.player.*
 
-class RecyclerAdapter(var ctx: Context) :
+
+class RecyclerAdapter(ctx: Context, val videos: List<VideoItem>) :
     RecyclerView.Adapter<RecyclerAdapter.VideoInfoHolder>() {
-    //these ids are the unique id for each video
-    var videoID =
-        arrayOf("P3mAtvs5Elc", "nCgQDjiotG0", "3kSdNmkcmTE")
+    var youTubePlayer: YouTubePlayer? = null
+    var youTubePlayerFragment: YouTubePlayerSupportFragment? = null
+    private val fragmentManager = (ctx as AppCompatActivity).supportFragmentManager
+//    private val youTubePlayerFragment: YouTubePlayerSupportFragment = YouTubePlayerSupportFragment.newInstance()
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -57,54 +61,93 @@ class RecyclerAdapter(var ctx: Context) :
                     youTubeThumbnailView: YouTubeThumbnailView?,
                     youTubeThumbnailLoader: YouTubeThumbnailLoader
                 ) {
-                    youTubeThumbnailLoader.setVideo(videoID[position])
+                    youTubeThumbnailLoader.setVideo(videos[position].id)
                     youTubeThumbnailLoader.setOnThumbnailLoadedListener(onThumbnailLoadedListener)
                 }
 
                 override fun onInitializationFailure(
                     youTubeThumbnailView: YouTubeThumbnailView?,
                     youTubeInitializationResult: YouTubeInitializationResult?
-                ) { //write something for failure
+                ) {
+                    // TODO
                 }
             })
         holder.playButton.setOnClickListener {
-            // val youTubePlayerFragmentX = YouTubePlayerSupportFragmentX.newInstance()
-            val youTubePlayerFragment = YouTubePlayerFragment.newInstance()
+            //            if (holder.containerYouTubePlayer.size == 0) {
+//                youTubePlayerFragment = YouTubePlayerSupportFragment.newInstance()
+//            }
+            try {
+                holder.containerYouTubePlayer.id = position + 1
 
-            (ctx as Activity).fragmentManager.beginTransaction().replace(
-                holder.containerYouTubePlayer.id,
-                youTubePlayerFragment
-            ).commit()
+                if (youTubePlayerFragment == null) {
+                    youTubePlayerFragment =
+                        YouTubePlayerSupportFragment.newInstance()
+                }
+                if ((youTubePlayerFragment as Fragment).isAdded) {
+                    if (youTubePlayer != null) {
+                        youTubePlayer?.pause()
+                        youTubePlayer?.release()
+                        youTubePlayer = null
+                    }
+                    fragmentManager
+                        .beginTransaction()
+                        .remove(youTubePlayerFragment as Fragment)
+                        .commit()
+                    fragmentManager
+                        .executePendingTransactions()
+                    youTubePlayerFragment = null
+                }
+                if (youTubePlayerFragment == null) {
+                    youTubePlayerFragment =
+                        YouTubePlayerSupportFragment.newInstance()
+                }
+                fragmentManager
+                    .beginTransaction()
+                    .add(
+                        holder.containerYouTubePlayer.id,
+                        youTubePlayerFragment as Fragment
+                    )
+                    .setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out)
+                    .commit()
 
-            youTubePlayerFragment.initialize(
-                DeveloperKey.DEVELOPER_KEY,
-                object : YouTubePlayer.OnInitializedListener {
-                    override fun onInitializationSuccess(
-                        arg0: YouTubePlayer.Provider?,
-                        player: YouTubePlayer,
-                        wasRestored: Boolean
-                    ) {
-                        if (!wasRestored) {
-                            player.cueVideo(videoID[position])
-                            // player.setFullscreen(true)
-                            // player.loadVideo("2zNSgSzhBfM")
-                            // player.play()
+//                (ctx as AppCompatActivity).supportFragmentManager.beginTransaction().replace(
+//                    holder.containerYouTubePlayer.id,
+//                    youTubePlayerFragment as Fragment
+//                ).addToBackStack(null).commit()
+
+                youTubePlayerFragment!!.initialize(
+                    DeveloperKey.DEVELOPER_KEY,
+                    object : YouTubePlayer.OnInitializedListener {
+                        override fun onInitializationSuccess(
+                            arg0: YouTubePlayer.Provider?,
+                            player: YouTubePlayer,
+                            wasRestored: Boolean
+                        ) {
+                            if (!wasRestored) {
+                                youTubePlayer = player
+                                youTubePlayer!!.cueVideo(videos[position].id)
+//                            player.cuePlaylist("PLWz5rJ2EKKc8jQfNAUu5reIGFNNqpn26X")
+                                // player.setFullscreen(true)
+                                // player.loadVideo("2zNSgSzhBfM")
+                                // player.play()
+                            }
                         }
-                    }
 
-                    override fun onInitializationFailure(
-                        arg0: YouTubePlayer.Provider?,
-                        arg1: YouTubeInitializationResult?
-                    ) {
-                        // TODO
-                    }
-                })
+                        override fun onInitializationFailure(
+                            arg0: YouTubePlayer.Provider?,
+                            arg1: YouTubeInitializationResult?
+                        ) {
+                            // TODO
+                        }
+                    })
+            } catch (e: Exception) {
+                Log.d("error", e.message)
+            }
         }
-
     }
 
     override fun getItemCount(): Int {
-        return videoID.size
+        return videos.size
     }
 
     class VideoInfoHolder(itemView: View) : ViewHolder(itemView) {
