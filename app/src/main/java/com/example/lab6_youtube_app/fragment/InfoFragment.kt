@@ -1,4 +1,4 @@
-package com.example.lab6_youtubeapp.fragment
+package com.example.lab6_youtube_app.fragment
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import com.example.lab6_youtubeapp.R
+import com.example.lab6_youtube_app.R
 
 class InfoFragment : Fragment() {
     override fun onCreateView(

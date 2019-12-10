@@ -1,4 +1,4 @@
-package com.example.lab6_youtubeapp.recyclerview
+package com.example.lab6_youtube_app.recyclerview
 
 import android.content.Context
 import android.util.Log
@@ -12,8 +12,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
-import com.example.lab6_youtubeapp.DeveloperKey
-import com.example.lab6_youtubeapp.R
+import com.example.lab6_youtube_app.DeveloperKey
+import com.example.lab6_youtube_app.R
 import com.google.android.youtube.player.*
 
 class RecyclerAdapter(ctx: Context, val videos: List<VideoItem>) :

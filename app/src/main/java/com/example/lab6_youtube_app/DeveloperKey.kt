@@ -1,4 +1,4 @@
-package com.example.lab6_youtubeapp
+package com.example.lab6_youtube_app
 
 class DeveloperKey {
     companion object {

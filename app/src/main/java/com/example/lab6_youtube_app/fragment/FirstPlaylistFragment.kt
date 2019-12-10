@@ -1,16 +1,15 @@
-package com.example.lab6_youtubeapp.fragment
+package com.example.lab6_youtube_app.fragment
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.lab6_youtubeapp.R
-import com.example.lab6_youtubeapp.recyclerview.RecyclerAdapter
-import com.example.lab6_youtubeapp.recyclerview.VideoItem
+import com.example.lab6_youtube_app.R
+import com.example.lab6_youtube_app.recyclerview.RecyclerAdapter
+import com.example.lab6_youtube_app.recyclerview.VideoItem
 import kotlinx.android.synthetic.main.first_playlist_fragment.view.*
 
 class FirstPlaylistFragment : Fragment() {

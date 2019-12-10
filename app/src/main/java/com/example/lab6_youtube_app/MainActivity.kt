@@ -1,10 +1,10 @@
-package com.example.lab6_youtubeapp
+package com.example.lab6_youtube_app
 
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import com.example.lab6_youtubeapp.fragment.*
+import com.example.lab6_youtube_app.fragment.*
 import com.mikepenz.iconics.typeface.library.googlematerial.GoogleMaterial
 import com.mikepenz.materialdrawer.AccountHeaderBuilder
 import com.mikepenz.materialdrawer.Drawer
