@@ -12,14 +12,14 @@
     <com.google.android.youtube.player.YouTubeThumbnailView
         android:id="@+id/youtube_thumbnail"
         android:layout_width="match_parent"
-        android:layout_height="190dp"
+        android:layout_height="200dp"
         android:scaleType="centerCrop"
         android:visibility="visible" />
 
     <RelativeLayout
-        android:id="@+id/relativeLayout_over_youtube_thumbnail"
+        android:id="@+id/youtube_frame_layout"
         android:layout_width="match_parent"
-        android:layout_height="190dp"
+        android:layout_height="wrap_content"
         android:visibility="visible">
 
         <ImageView
@@ -33,7 +33,14 @@
         <FrameLayout
             android:id="@+id/youtube_holder"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="200dp" />
 
+        <TextView
+            android:id="@+id/video_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:gravity="center"
+            android:textSize="15sp" />
     </RelativeLayout>
 </androidx.cardview.widget.CardView>
