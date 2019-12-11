@@ -22,7 +22,7 @@ class FirstPlaylistFragment : Fragment() {
         (activity as AppCompatActivity).supportActionBar?.title =
             resources.getString(R.string.playlist_1_title)
 
-        val recyclerView = view.recycler_view
+        val recyclerView = view.recycler_view_first
         recyclerView.layoutManager = LinearLayoutManager(activity)
         recyclerView.adapter = RecyclerAdapter(activity as AppCompatActivity, generateVideoItems())
 
