@@ -33,8 +33,8 @@ class RecyclerAdapter(ctx: Context, val youtubeVideos: List<YoutubeVideo>) :
             itemView.findViewById<View>(R.id.youtube_thumbnail) as YouTubeThumbnailView
         val playButton: ImageView =
             itemView.findViewById<View>(R.id.btn_youtube_player) as ImageView
-        val videoTitle: TextView =
-            itemView.findViewById(R.id.video_title) as TextView
+//        val videoTitle: TextView =
+//            itemView.findViewById(R.id.video_title) as TextView
     }
 
     val apiService = VideoService.create()

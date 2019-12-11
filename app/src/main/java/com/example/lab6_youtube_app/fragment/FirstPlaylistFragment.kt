@@ -9,7 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.lab6_youtube_app.R
 import com.example.lab6_youtube_app.recyclerview.RecyclerAdapter
-import com.example.lab6_youtube_app.recyclerview.VideoItem
+import com.example.lab6_youtube_app.recyclerview.YoutubeVideo
 import kotlinx.android.synthetic.main.first_playlist_fragment.view.*
 
 class FirstPlaylistFragment : Fragment() {
@@ -29,11 +29,11 @@ class FirstPlaylistFragment : Fragment() {
         return view
     }
 
-    private fun generateVideoItems(): List<VideoItem> {
+    private fun generateVideoItems(): List<YoutubeVideo> {
         return listOf(
-            VideoItem("P3mAtvs5Elc"),
-            VideoItem("nCgQDjiotG0"),
-            VideoItem("3kSdNmkcmTE")
+            YoutubeVideo("P3mAtvs5Elc"),
+            YoutubeVideo("nCgQDjiotG0"),
+            YoutubeVideo("3kSdNmkcmTE")
         )
     }
 }
