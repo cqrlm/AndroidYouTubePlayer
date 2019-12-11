@@ -10,42 +10,51 @@
         android:layout_width="match_parent"
         android:layout_height="270dp">
 
-    <com.google.android.youtube.player.YouTubeThumbnailView
-        android:id="@+id/youtube_thumbnail"
-        android:layout_width="match_parent"
-        android:layout_height="190dp"
-        android:scaleType="centerCrop"
-        android:visibility="visible" />
+        <com.google.android.youtube.player.YouTubeThumbnailView
+            android:id="@+id/youtube_thumbnail"
+            android:layout_width="match_parent"
+            android:layout_height="190dp"
+            android:scaleType="centerCrop"
+            android:visibility="visible" />
 
-    <RelativeLayout
-        android:id="@+id/youtube_frame_layout"
-        android:layout_width="match_parent"
-        android:layout_height="190dp"
-        android:visibility="visible">
+        <RelativeLayout
+            android:id="@+id/youtube_frame_layout"
+            android:layout_width="match_parent"
+            android:layout_height="190dp"
+            android:visibility="visible">
 
-        <ImageView
-            android:id="@+id/btn_youtube_player"
+            <ProgressBar
+                android:id="@+id/progress_bar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:layout_centerInParent="true"
+                android:visibility="visible" />
+
+            <ImageView
+                android:id="@+id/btn_youtube_player"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:contentDescription="@string/youtube_player_play_button"
+                android:scaleType="center"
+                android:src="@mipmap/ic_youtube_play_button"
+                android:visibility="gone" />
+
+            <FrameLayout
+                android:id="@+id/youtube_holder"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/video_title"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:contentDescription="@string/youtube_player_play_button"
-            android:scaleType="center"
-            android:src="@mipmap/ic_youtube_play_button" />
-
-        <FrameLayout
-            android:id="@+id/youtube_holder"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-
-    </RelativeLayout>
-
-    <TextView
-        android:id="@+id/video_title"
-        android:layout_below="@+id/youtube_thumbnail"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:textSize="20sp"/>
+            android:layout_below="@+id/youtube_thumbnail"
+            android:gravity="center"
+            android:textSize="20sp" />
 
     </RelativeLayout>
 </androidx.cardview.widget.CardView>

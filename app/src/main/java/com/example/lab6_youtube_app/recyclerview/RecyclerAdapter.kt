@@ -5,10 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.FrameLayout
-import android.widget.ImageView
-import android.widget.RelativeLayout
-import android.widget.TextView
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
@@ -19,7 +16,6 @@ import com.google.android.youtube.player.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-
 
 class RecyclerAdapter(ctx: Context, val youtubeVideos: List<YoutubeVideo>) :
     RecyclerView.Adapter<RecyclerAdapter.VideoInfoHolder>() {
@@ -35,6 +31,8 @@ class RecyclerAdapter(ctx: Context, val youtubeVideos: List<YoutubeVideo>) :
             itemView.findViewById<View>(R.id.btn_youtube_player) as ImageView
         val videoTitle: TextView =
             itemView.findViewById(R.id.video_title) as TextView
+        val progressBar: ProgressBar =
+            itemView.findViewById<View>(R.id.progress_bar) as ProgressBar
     }
 
     private val apiService = VideoService.create()
@@ -64,7 +62,7 @@ class RecyclerAdapter(ctx: Context, val youtubeVideos: List<YoutubeVideo>) :
                     call: Call<YoutubeVideoResponse>,
                     t: Throwable
                 ) {
-                    // TODO
+                    Log.d("CallbackFailure", t.toString())
                 }
 
                 override fun onResponse(
@@ -128,7 +126,7 @@ class RecyclerAdapter(ctx: Context, val youtubeVideos: List<YoutubeVideo>) :
                             youTubeThumbnailView: YouTubeThumbnailView?,
                             errorReason: YouTubeThumbnailLoader.ErrorReason?
                         ) {
-                            Log.d("ThumbnailError", errorReason as String)
+                            Log.d("ThumbnailError", errorReason.toString())
                         }
 
                         override fun onThumbnailLoaded(
@@ -137,6 +135,8 @@ class RecyclerAdapter(ctx: Context, val youtubeVideos: List<YoutubeVideo>) :
                         ) {
                             youTubeThumbnailView.visibility = View.VISIBLE
                             holder.youTubeFrameLayout.visibility = View.VISIBLE
+                            holder.playButton.visibility = View.VISIBLE
+                            holder.progressBar.visibility = View.GONE
                         }
                     })
                 }
@@ -145,7 +145,7 @@ class RecyclerAdapter(ctx: Context, val youtubeVideos: List<YoutubeVideo>) :
                     youTubeThumbnailView: YouTubeThumbnailView?,
                     youTubeInitializationResult: YouTubeInitializationResult?
                 ) {
-                    Log.d("InitializationFailure", youTubeInitializationResult as String)
+                    Log.d("InitializationFailure", youTubeInitializationResult.toString())
                 }
             })
     }
@@ -170,7 +170,6 @@ class RecyclerAdapter(ctx: Context, val youtubeVideos: List<YoutubeVideo>) :
                             }
                         }
                         youTubePlayer.fullscreenControlFlags = 0
-//                        youTubePlayer.cueVideo(response.body()?.item?.first()?.id)
                         youTubePlayer.cueVideo(youtubeVideos[position].id)
                     }
                 }
@@ -179,7 +178,7 @@ class RecyclerAdapter(ctx: Context, val youtubeVideos: List<YoutubeVideo>) :
                     provider: YouTubePlayer.Provider?,
                     youTubeInitializationResult: YouTubeInitializationResult?
                 ) {
-                    Log.d("InitializationFailure", youTubeInitializationResult as String)
+                    Log.d("InitializationFailure", youTubeInitializationResult.toString())
                 }
             })
     }
