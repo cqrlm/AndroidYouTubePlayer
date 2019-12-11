@@ -37,8 +37,9 @@ class RecyclerAdapter(ctx: Context, val youtubeVideos: List<YoutubeVideo>) :
             itemView.findViewById(R.id.video_title) as TextView
     }
 
-    val apiService = VideoService.create()
-    lateinit var youTubePlayer: YouTubePlayer
+    private val apiService = VideoService.create()
+    private val videosInfo = mutableListOf<Item>()
+    private lateinit var youTubePlayer: YouTubePlayer
     private lateinit var youTubePlayerFragment: YouTubePlayerSupportFragment
     private val fragmentManager = (ctx as AppCompatActivity).supportFragmentManager
 
@@ -56,7 +57,28 @@ class RecyclerAdapter(ctx: Context, val youtubeVideos: List<YoutubeVideo>) :
         holder: VideoInfoHolder,
         position: Int
     ) {
+        for (video in youtubeVideos) {
+            apiService.search(video.id)
+                .enqueue(object : Callback<YoutubeVideoResponse> {
+                    override fun onFailure(
+                        call: Call<YoutubeVideoResponse>,
+                        t: Throwable
+                    ) {
+                        // TODO
+                    }
+
+                    override fun onResponse(
+                        call: Call<YoutubeVideoResponse>,
+                        response: Response<YoutubeVideoResponse>
+                    ) {
+                        videosInfo.add(response.body()?.item!!.first())
+                        holder.videoTitle.text = videosInfo[position].snippet.title
+                    }
+                })
+        }
+
         initYouTubeThumbnailView(holder, position)
+
         holder.playButton.setOnClickListener {
             holder.containerYouTubePlayer.id = position + 1
 
@@ -89,6 +111,9 @@ class RecyclerAdapter(ctx: Context, val youtubeVideos: List<YoutubeVideo>) :
                 .commit()
             initYouTubePlayerFragment(position)
         }
+
+
+//        holder.videoTitle.text = videosInfo[position].snippet.title
     }
 
     override fun getItemCount(): Int {
@@ -148,28 +173,11 @@ class RecyclerAdapter(ctx: Context, val youtubeVideos: List<YoutubeVideo>) :
                             if (!fullscreenCheck) {
                                 fullscreenCheck = true
                                 youTubePlayer.setFullscreen(fullscreenCheck)
-                                youTubePlayer.cueVideo(youtubeVideos[position].id)
+                                youTubePlayer.cueVideo(videosInfo[position].id)
                             }
                         }
                         youTubePlayer.fullscreenControlFlags = 0
-//                        youTubePlayer.cueVideo(response.body()?.item?.first()?.id)
-
-                        apiService.search(youtubeVideos[position].id)
-                            .enqueue(object : Callback<YoutubeVideoResponse> {
-                                override fun onFailure(
-                                    call: Call<YoutubeVideoResponse>,
-                                    t: Throwable
-                                ) {
-                                    // TODO
-                                }
-
-                                override fun onResponse(
-                                    call: Call<YoutubeVideoResponse>,
-                                    response: Response<YoutubeVideoResponse>
-                                ) {
-                                    youTubePlayer.cueVideo(response.body()?.item?.first()?.id)
-                                }
-                            })
+                        youTubePlayer.cueVideo(videosInfo[position].id)
                     }
                 }
 
