@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.lab6_youtube_app.R
 import com.example.lab6_youtube_app.recyclerview.RecyclerAdapter
 import com.example.lab6_youtube_app.recyclerview.YoutubeVideo
-import kotlinx.android.synthetic.main.first_playlist_fragment.view.*
+import kotlinx.android.synthetic.main.playlist_fragment.view.*
 
 class FirstPlaylistFragment : Fragment() {
     override fun onCreateView(
@@ -18,11 +18,11 @@ class FirstPlaylistFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.first_playlist_fragment, container, false)
+        val view = inflater.inflate(R.layout.playlist_fragment, container, false)
         (activity as AppCompatActivity).supportActionBar?.title =
             resources.getString(R.string.playlist_1_title)
 
-        val recyclerView = view.recycler_view_first
+        val recyclerView = view.recycler_view
         recyclerView.layoutManager = LinearLayoutManager(activity)
         recyclerView.adapter = RecyclerAdapter(activity as AppCompatActivity, generateVideoItems())
 
