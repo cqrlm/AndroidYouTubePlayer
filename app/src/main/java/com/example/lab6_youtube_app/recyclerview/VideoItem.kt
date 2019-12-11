@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName
 
 data class YoutubeVideo(val id: String)
 
-data class YoutubeVideoResponse(@SerializedName("items") val item: List<Item>)
+data class YoutubeVideoResponse(@SerializedName("items") val items: List<Item>)
 
 data class Item(@SerializedName("id") val id : String,
                 @SerializedName("snippet") val snippet : Snippet)

@@ -31,9 +31,9 @@ class FirstPlaylistFragment : Fragment() {
 
     private fun generateVideoItems(): List<YoutubeVideo> {
         return listOf(
-            YoutubeVideo("P3mAtvs5Elc"),
-            YoutubeVideo("nCgQDjiotG0"),
-            YoutubeVideo("3kSdNmkcmTE")
+            YoutubeVideo("3kSdNmkcmTE"),
+            YoutubeVideo("YB8IVbvdoW0"),
+            YoutubeVideo("_mgfpB5XXEs")
         )
     }
 }

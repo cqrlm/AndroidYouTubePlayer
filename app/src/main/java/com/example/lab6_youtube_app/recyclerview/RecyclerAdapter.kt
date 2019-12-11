@@ -33,12 +33,12 @@ class RecyclerAdapter(ctx: Context, val youtubeVideos: List<YoutubeVideo>) :
             itemView.findViewById<View>(R.id.youtube_thumbnail) as YouTubeThumbnailView
         val playButton: ImageView =
             itemView.findViewById<View>(R.id.btn_youtube_player) as ImageView
-//        val videoTitle: TextView =
-//            itemView.findViewById(R.id.video_title) as TextView
+        val videoTitle: TextView =
+            itemView.findViewById(R.id.video_title) as TextView
     }
 
-    val apiService = VideoService.create()
-    lateinit var youTubePlayer: YouTubePlayer
+    private val apiService = VideoService.create()
+    private lateinit var youTubePlayer: YouTubePlayer
     private lateinit var youTubePlayerFragment: YouTubePlayerSupportFragment
     private val fragmentManager = (ctx as AppCompatActivity).supportFragmentManager
 
@@ -57,6 +57,24 @@ class RecyclerAdapter(ctx: Context, val youtubeVideos: List<YoutubeVideo>) :
         position: Int
     ) {
         initYouTubeThumbnailView(holder, position)
+
+        apiService.search(youtubeVideos[position].id)
+            .enqueue(object : Callback<YoutubeVideoResponse> {
+                override fun onFailure(
+                    call: Call<YoutubeVideoResponse>,
+                    t: Throwable
+                ) {
+                    // TODO
+                }
+
+                override fun onResponse(
+                    call: Call<YoutubeVideoResponse>,
+                    response: Response<YoutubeVideoResponse>
+                ) {
+                    holder.videoTitle.text = response.body()?.items?.first()?.snippet!!.title
+                }
+            })
+
         holder.playButton.setOnClickListener {
             holder.containerYouTubePlayer.id = position + 1
 
@@ -153,23 +171,7 @@ class RecyclerAdapter(ctx: Context, val youtubeVideos: List<YoutubeVideo>) :
                         }
                         youTubePlayer.fullscreenControlFlags = 0
 //                        youTubePlayer.cueVideo(response.body()?.item?.first()?.id)
-
-                        apiService.search(youtubeVideos[position].id)
-                            .enqueue(object : Callback<YoutubeVideoResponse> {
-                                override fun onFailure(
-                                    call: Call<YoutubeVideoResponse>,
-                                    t: Throwable
-                                ) {
-                                    // TODO
-                                }
-
-                                override fun onResponse(
-                                    call: Call<YoutubeVideoResponse>,
-                                    response: Response<YoutubeVideoResponse>
-                                ) {
-                                    youTubePlayer.cueVideo(response.body()?.item?.first()?.id)
-                                }
-                            })
+                        youTubePlayer.cueVideo(youtubeVideos[position].id)
                     }
                 }
 
