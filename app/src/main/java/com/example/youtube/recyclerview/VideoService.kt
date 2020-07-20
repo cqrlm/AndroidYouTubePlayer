@@ -1,6 +1,6 @@
-package com.example.lab6_youtube_app.recyclerview
+package com.example.youtube.recyclerview
 
-import com.example.lab6_youtube_app.DeveloperKey
+import com.example.youtube.DeveloperKey
 import retrofit2.Call
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory

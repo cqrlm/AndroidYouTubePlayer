@@ -1,2 +1,2 @@
 include ':app'
-rootProject.name='Lab6_YouTubeApp'
+rootProject.name='YouTubeApp'

@@ -1,4 +1,4 @@
-package com.example.lab6_youtube_app.fragment
+package com.example.youtube.fragment
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,12 +7,12 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.lab6_youtube_app.R
-import com.example.lab6_youtube_app.recyclerview.RecyclerAdapter
-import com.example.lab6_youtube_app.recyclerview.YoutubeVideo
+import com.example.youtube.R
+import com.example.youtube.recyclerview.RecyclerAdapter
+import com.example.youtube.recyclerview.YoutubeVideo
 import kotlinx.android.synthetic.main.playlist_fragment.view.*
 
-class ThirdPlaylistFragment : Fragment() {
+class FirstPlaylistFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -20,7 +20,7 @@ class ThirdPlaylistFragment : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.playlist_fragment, container, false)
         (activity as AppCompatActivity).supportActionBar?.title =
-            resources.getString(R.string.playlist_3_title)
+            resources.getString(R.string.playlist_1_title)
 
         val recyclerView = view.recycler_view
         recyclerView.layoutManager = LinearLayoutManager(activity)
@@ -31,9 +31,9 @@ class ThirdPlaylistFragment : Fragment() {
 
     private fun generateVideoItems(): List<YoutubeVideo> {
         return listOf(
-            YoutubeVideo("hi5R0gq9tdA"),
-            YoutubeVideo("TxAbht2DkyU"),
-            YoutubeVideo("HBPQZEU_ofg")
+            YoutubeVideo("3kSdNmkcmTE"),
+            YoutubeVideo("YB8IVbvdoW0"),
+            YoutubeVideo("_mgfpB5XXEs")
         )
     }
 }

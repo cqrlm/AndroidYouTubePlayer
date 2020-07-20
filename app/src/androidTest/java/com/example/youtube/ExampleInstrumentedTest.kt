@@ -1,4 +1,4 @@
-package com.example.lab6_youtube_app
+package com.example.youtube
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4

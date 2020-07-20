@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Lab6_YouTubeApp</string>
+    <string name="app_name">YouTube Playlists</string>
     <string name="home_title">Home</string>
     <string name="playlist_1_title">Playlist 1</string>
     <string name="playlist_2_title">Playlist 2</string>

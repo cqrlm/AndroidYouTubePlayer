@@ -1,4 +1,4 @@
-package com.example.lab6_youtube_app.recyclerview
+package com.example.youtube.recyclerview
 
 import android.content.Context
 import android.util.Log
@@ -10,8 +10,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
-import com.example.lab6_youtube_app.DeveloperKey
-import com.example.lab6_youtube_app.R
+import com.example.youtube.DeveloperKey
+import com.example.youtube.R
 import com.google.android.youtube.player.*
 import retrofit2.Call
 import retrofit2.Callback

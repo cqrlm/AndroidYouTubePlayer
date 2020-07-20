@@ -1,4 +1,4 @@
-package com.example.lab6_youtube_app.recyclerview
+package com.example.youtube.recyclerview
 
 import com.google.gson.annotations.SerializedName
 
