@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.example.youtube.DeveloperKey
 import com.example.youtube.R
 import com.google.android.youtube.player.*
+import kotlinx.android.synthetic.main.video_item.view.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -21,18 +22,12 @@ class RecyclerAdapter(ctx: Context, val youtubeVideos: List<YoutubeVideo>) :
     RecyclerView.Adapter<RecyclerAdapter.VideoInfoHolder>() {
 
     inner class VideoInfoHolder(itemView: View) : ViewHolder(itemView) {
-        val containerYouTubePlayer: FrameLayout =
-            itemView.findViewById(R.id.youtube_holder) as FrameLayout
-        val youTubeFrameLayout: RelativeLayout =
-            itemView.findViewById<View>(R.id.youtube_frame_layout) as RelativeLayout
-        val youTubeThumbnailView: YouTubeThumbnailView =
-            itemView.findViewById<View>(R.id.youtube_thumbnail) as YouTubeThumbnailView
-        val playButton: ImageView =
-            itemView.findViewById<View>(R.id.btn_youtube_player) as ImageView
-        val videoTitle: TextView =
-            itemView.findViewById(R.id.video_title) as TextView
-        val progressBar: ProgressBar =
-            itemView.findViewById<View>(R.id.progress_bar) as ProgressBar
+        val containerYouTubePlayer = itemView.youtube_holder as FrameLayout
+        val youTubeFrameLayout = itemView.youtube_frame_layout as RelativeLayout
+        val youTubeThumbnailView = itemView.youtube_thumbnail as YouTubeThumbnailView
+        val playButton = itemView.btn_youtube_player as ImageView
+        val videoTitle = itemView.video_title as TextView
+        val progressBar = itemView.progress_bar as ProgressBar
     }
 
     private val apiService = VideoService.create()
@@ -40,20 +35,14 @@ class RecyclerAdapter(ctx: Context, val youtubeVideos: List<YoutubeVideo>) :
     private lateinit var youTubePlayerFragment: YouTubePlayerSupportFragment
     private val fragmentManager = (ctx as AppCompatActivity).supportFragmentManager
 
-    override fun onCreateViewHolder(
-        parent: ViewGroup,
-        viewType: Int
-    ): VideoInfoHolder {
-        val itemView: View =
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VideoInfoHolder {
+        val itemView =
             LayoutInflater.from(parent.context).inflate(R.layout.video_item, parent, false)
 
         return VideoInfoHolder(itemView)
     }
 
-    override fun onBindViewHolder(
-        holder: VideoInfoHolder,
-        position: Int
-    ) {
+    override fun onBindViewHolder(holder: VideoInfoHolder, position: Int) {
         initYouTubeThumbnailView(holder, position)
 
         apiService.search(youtubeVideos[position].id)

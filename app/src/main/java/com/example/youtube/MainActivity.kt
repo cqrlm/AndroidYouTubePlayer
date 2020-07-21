@@ -26,41 +26,41 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
-        val accountHeader = AccountHeaderBuilder()
-            .withActivity(this)
-            .withHeaderBackground(R.drawable.header)
-            .build()
-
         setSupportActionBar(toolbar)
-
-        drawer = DrawerBuilder()
-            .withActivity(this)
-            .withToolbar(toolbar)
-            .withAccountHeader(accountHeader)
-            .withActionBarDrawerToggle(true)
-            .withActionBarDrawerToggleAnimated(true)
-            .addDrawerItems(
-                homeItem.withIcon(GoogleMaterial.Icon.gmd_home),
-                firstPlaylistItem.withIcon(GoogleMaterial.Icon.gmd_video_library),
-                secondPlaylistItem.withIcon(GoogleMaterial.Icon.gmd_video_library),
-                thirdPlaylistItem.withIcon(GoogleMaterial.Icon.gmd_video_library),
-                DividerDrawerItem(),
-                infoItem.withIcon(GoogleMaterial.Icon.gmd_info)
-            )
-            .withOnDrawerItemClickListener(object : Drawer.OnDrawerItemClickListener {
-                override fun onItemClick(
-                    view: View?,
-                    position: Int,
-                    drawerItem: IDrawerItem<*>
-                ): Boolean {
-                    selectItem(drawerItem)
-                    return true
-                }
-            })
-            .build()
+        drawer = initDrawer()
         selectItem()
     }
+
+    private fun initDrawer() = DrawerBuilder()
+        .withActivity(this)
+        .withToolbar(toolbar)
+        .withAccountHeader(initAccountHeader())
+        .withActionBarDrawerToggle(true)
+        .withActionBarDrawerToggleAnimated(true)
+        .addDrawerItems(
+            homeItem.withIcon(GoogleMaterial.Icon.gmd_home),
+            firstPlaylistItem.withIcon(GoogleMaterial.Icon.gmd_video_library),
+            secondPlaylistItem.withIcon(GoogleMaterial.Icon.gmd_video_library),
+            thirdPlaylistItem.withIcon(GoogleMaterial.Icon.gmd_video_library),
+            DividerDrawerItem(),
+            infoItem.withIcon(GoogleMaterial.Icon.gmd_info)
+        )
+        .withOnDrawerItemClickListener(object : Drawer.OnDrawerItemClickListener {
+            override fun onItemClick(
+                view: View?,
+                position: Int,
+                drawerItem: IDrawerItem<*>
+            ): Boolean {
+                selectItem(drawerItem)
+                return true
+            }
+        })
+        .build()
+
+    private fun initAccountHeader() = AccountHeaderBuilder()
+        .withActivity(this)
+        .withHeaderBackground(R.drawable.header)
+        .build()
 
     private fun selectItem(drawerItem: IDrawerItem<*>) {
         val fragment: Fragment = when (drawerItem) {
